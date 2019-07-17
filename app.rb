@@ -6,6 +6,10 @@ module SampleWeb
     set :bind, '0.0.0.0'
     set :port, 3000
 
+    configure do
+      mime_type :pdf, 'application/pdf'
+    end
+
     get '/' do
       @config = SampleWeb::SampleNames.new.config
       builder = SampleWeb::Builder.new(@config)
@@ -18,6 +22,19 @@ module SampleWeb
       builder = SampleWeb::Builder.new(@config)
       @card = builder.build_card
       haml :index
+    end
+
+    get '/cardset.pdf' do
+      content_type :pdf
+      headers('Content-Disposition' => 'attachment;filename="cardset.pdf"')
+
+      @config = config_for(params)
+      builder = SampleWeb::Builder.new(@config)
+      @cards = Array.new(10) { builder.build_card }
+      html = haml(:cardset, layout: :pdflayout)
+      kit = PDFKit.new(html)
+      kit.stylesheets << './public/stylesheets/application.css'
+      kit.to_pdf
     end
 
     private
