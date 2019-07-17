@@ -1,0 +1,19 @@
+.bingoCard
+  %header
+    %h1= card.title
+  %table.card
+    %thead
+      %tr
+        %th B
+        %th I
+        %th N
+        %th G
+        %th O
+    %tbody
+      - 5.times do |i|
+        %tr
+          - 5.times do |j|
+            %td{ style: "font-size: #{card.size}pt;" }= card.grid[i][j]
+  %footer
+    .tagline
+      %h2 http://www.bingobuilder.com

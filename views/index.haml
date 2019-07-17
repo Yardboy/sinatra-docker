@@ -1,3 +1,32 @@
 .row
   .col
-    %h1 Hello World!
+    %form#configForm.form{ action: '/', method: :post }
+      .form-group
+        %label{ for: 'configTitle' } Game Title
+        %input.form-control{ type: 'text', id: 'configTitle', name: 'config_title', placeholder: 'Enter game title', value: @config.title }
+      .form-group
+        %label{ for: 'configDefinition' } Game Definitions
+        %textarea.form-control.js-autoResize{ id: 'configDefinition', name: 'config_definitions', style: 'min-height: 1000px;', data: { offset: 260 } }= @config.definitions
+      .form-group.text-center
+        %button.btn.btn-success.col-3{ type: 'submit', name: 'commit', value: 'update' }
+          %i.far.fa-save
+          Update
+        %button#previewButton.btn.btn-primary.col-3
+          %i.far.fa-eye
+          Preview
+        %button#downloadButton.btn.btn-dark.col-3
+          %i.far.fa-download
+          Download
+
+#cardPreview.modal.fade{ tabindex: '-1', role: 'dialog', aria: { labelled_by: 'cardPreviewLabel', hidden: true } }
+  .modal-dialog.modal-lg.modal-dialog-centered{ role: 'document' }
+    .modal-content
+      .modal-header
+        %h5#cardPreviewLabel.modal-title Card Preview
+        %button.close{ type: 'button', date: { dismiss: 'modal' }, aria: { label: 'Close' } }
+          %span{ aria: { hidden: true } } &times;
+      .modal-body
+        .container
+          .row
+            .col
+              = haml :card, locals: { card: @card }
