@@ -1,4 +1,4 @@
-module SampleWeb
+module BingoBuilder
   Item = Struct.new(:text, :rule, :children)
   Rule = Struct.new(:min, :max, :col, :row)
 

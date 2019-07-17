@@ -1,4 +1,4 @@
-module SampleWeb
+module BingoBuilder
   Dir.glob('app/required/*.rb').each { |file| load file }
 
   class App < Sinatra::Base
@@ -11,15 +11,15 @@ module SampleWeb
     end
 
     get '/' do
-      @config = SampleWeb::SampleNames.new.config
-      builder = SampleWeb::Builder.new(@config)
+      @config = BingoBuilder::SampleNames.new.config
+      builder = BingoBuilder::Builder.new(@config)
       @card = builder.build_card
       haml :index
     end
 
     post '/' do
-      @config = config_for(params)
-      builder = SampleWeb::Builder.new(@config)
+      @config = BingoBuilder::Config.config_from_json(params)
+      builder = BingoBuilder::Builder.new(@config)
       @card = builder.build_card
       haml :index
     end
@@ -28,27 +28,19 @@ module SampleWeb
       content_type :pdf
       headers('Content-Disposition' => 'attachment;filename="cardset.pdf"')
 
-      @config = config_for(params)
-      builder = SampleWeb::Builder.new(@config)
+      @config = BingoBuilder::Config.config_from_json(params)
+      builder = BingoBuilder::Builder.new(@config)
       @cards = Array.new(10) { builder.build_card }
-      html = haml(:cardset, layout: :pdflayout)
-      kit = PDFKit.new(html)
-      kit.stylesheets << './public/stylesheets/application.css'
-      kit.to_pdf
+      render_pdf :cardset
     end
 
     private
 
-    def config_for(params)
-      if params[:config_definitions][0..8] == '{"title":'
-        SampleWeb::Config.new.from_json(params[:config_definitions])
-      else
-        SampleWeb::Config.new(
-          title: params[:config_title] || 'Bingo Card',
-          size: 16,
-          definitions: params[:config_definitions] || ''
-        )
-      end
+    def render_pdf(template)
+      html = haml(template, layout: :pdflayout)
+      kit = PDFKit.new(html)
+      kit.stylesheets << './public/stylesheets/application.css'
+      kit.to_pdf
     end
   end
 end

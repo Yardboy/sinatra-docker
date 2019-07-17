@@ -1,4 +1,4 @@
-module SampleWeb
+module BingoBuilder
   class InvalidColumnError < StandardError; end
   class InvalidRowError < StandardError; end
 

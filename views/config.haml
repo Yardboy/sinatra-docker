@@ -1,0 +1,20 @@
+.bingoCard
+  .row
+    .col
+      %p.text-center
+        You can recover
+        your bingo card setup
+        in the future
+        by copy-and-pasting
+        the configuration text below
+        into the 
+        %strong Game Definitions
+        field in the main form.
+      %hr
+  .row
+    .col
+      .config
+        = @config.to_json
+  %footer
+    .tagline
+      %h2 http://www.bingobuilder.com

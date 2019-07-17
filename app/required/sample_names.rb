@@ -1,11 +1,11 @@
 # rubocop:disable all
-module SampleWeb
+module BingoBuilder
   class SampleNames
     # returns the sample standard config
     #
-    # @return [SampleWeb::Config]
+    # @return [BingoBuilder::Config]
     def config
-      SampleWeb::Config.new(title: 'Popular Names Bingo', size: 16, definitions: definitions_text)
+      BingoBuilder::Config.new(title: 'Popular Names Bingo', size: 16, definitions: definitions_text)
     end
 
     private

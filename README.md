@@ -1,4 +1,4 @@
-# SampleWeb - Sinatra app running in Docker
+# BingoBuilder - Sinatra app running in Docker
 
 ## Dependencies
 

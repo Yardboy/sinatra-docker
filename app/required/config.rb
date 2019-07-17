@@ -1,7 +1,21 @@
 # rubocop:disable all
-module SampleWeb
+module BingoBuilder
   class Config
     attr_accessor :title, :size, :definitions
+
+    class << self
+      def config_from_json(params)
+        if params[:config_definitions][0..8] == '{"title":'
+          new.from_json(params[:config_definitions])
+        else
+          new(
+            title: params[:config_title] || 'Bingo Card',
+            size: 16,
+            definitions: params[:config_definitions] || ''
+          )
+        end
+      end
+    end
 
     def initialize(config = {})
       set_config(config)

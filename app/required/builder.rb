@@ -1,17 +1,17 @@
-module SampleWeb
+module BingoBuilder
   class Builder
     attr_reader :game, :grid, :items
 
     def initialize(config)
-      @game = SampleWeb::Game.new(config)
+      @game = BingoBuilder::Game.new(config)
     end
 
     # builds a bingo card
     #
-    # @return [SampleWeb::Card]
+    # @return [BingoBuilder::Card]
     def build_card
       @items = game.reset_items
-      @card = SampleWeb::Card.new(@game.title, @game.size)
+      @card = BingoBuilder::Card.new(@game.title, @game.size)
       add_mandatory_items
       add_discretionary_items
       @card
@@ -41,7 +41,7 @@ module SampleWeb
 
     # adds an item to a bingo card
     #
-    # @param [SampleWeb::Item]
+    # @param [BingoBuilder::Item]
     def add_item_to_card(item)
       @card.add(get_item_text(item), item.rule.col, item.rule.row) if item.rule.max.positive?
     end
@@ -50,7 +50,7 @@ module SampleWeb
     # - if it's an ungrouped item, use the item text and remove the item
     # - if it's a group, sample the children and remove selected child
     #
-    # @param [SampleWeb::Item]
+    # @param [BingoBuilder::Item]
     # @return [String]
     def get_item_text(item)
       text = if item.children.empty?
