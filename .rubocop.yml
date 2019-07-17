@@ -1,0 +1,25 @@
+AllCops:
+  Exclude:
+    - bin/**/*
+    - docker/**/*
+    - log/**/*
+    - Gemfile
+  TargetRubyVersion: 2.3
+
+Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+Metrics/MethodLength:
+  Enabled: false
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Layout/EndOfLine:
+  EnforcedStyle: lf

@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  sample_web:
+    build:
+      context: ../
+    entrypoint: /var/www/app/docker/entrypoint.sh
+    command: bash -c "rackup config.ru"
+    container_name: "sample_web"
+    hostname: "sample_web"
+    ports:
+      - 3000:3000
+    volumes:
+      - ../:/var/www/app
+      - sample_bundle:/bundle
+    env_file: ../.env
+    environment:
+      BUNDLE_PATH: /bundle
+
+  sample_bundle:
+    image: busybox
+    container_name: "sample_bundle"
+    volumes:
+      - sample_bundle:/bundle
+
+volumes:
+  sample_bundle:
