@@ -10,3 +10,5 @@ gem 'sass'
 gem 'thin'
 gem 'wkhtmltopdf-binary'
 gem 'pdfkit'
+
+gem "rexml", ">= 3.2.5"
